@@ -10,7 +10,7 @@ import { useState } from 'react';
 const Chart = () => {
   const [clear, setClear] = useState(false)
   const { data, error, isLoading } = useGetConcentrationQuery(null, {
-    pollingInterval: 3000,
+    pollingInterval: 10000,
     refetchOnMountOrArgChange: true,
     skip: false,
   });
@@ -19,7 +19,7 @@ const Chart = () => {
     setClear(draft => !draft)
     setTimeout(() => {
       setClear(draft => !draft)
-    }, 500)
+    }, 10000)
   }
 
   return (

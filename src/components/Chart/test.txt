@@ -1,0 +1,25 @@
+const updateSeries = (setTime) => {
+    if(flag) {
+      setTime = setTimeout(() => {
+        setSeries(
+          series.map((item) => {
+            return {
+              ...item,
+              data: [...item.data, [timestamp, Math.floor(Math.random() * 1000)]],
+            };
+          })
+        );
+      }, 1000);
+      setTimestamp((draft) => draft + 1000);
+    }
+    else clearTimeout(setTime)
+  }
+
+  useEffect(() => {
+    let setTime
+    updateSeries(setTime)
+
+    return () => {
+      clearTimeout(setTime);
+    };
+  }, [series, flag]);

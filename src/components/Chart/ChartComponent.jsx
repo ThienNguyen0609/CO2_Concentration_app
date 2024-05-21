@@ -21,8 +21,21 @@ const ChartComponent = ({ title, data, yaxis, type, fill }) => {
           options={{
             ...options, 
             yaxis: yaxis, 
+            xaxis: {
+              ...options.xaxis,
+              title: {
+                ...options.xaxis.title,
+                style: {
+                  color: mode ? "#000" : "#fff",
+                },
+              },
+            },
             title: {
-              ...options.title, text: title
+              ...options.title, 
+              text: title,
+              style: {
+                color: mode ? "#000" : "#fff",
+              },
             }, 
             fill: fill,
             chart: {
@@ -72,9 +85,6 @@ const options = {
     },
     title: {
       text: "TIME",
-      style: {
-        color: "#fff",
-      },
     },
     tickPlacement: "on",
     label: {
@@ -92,9 +102,6 @@ const options = {
     width: 2,
   },
   title: {
-    style: {
-      color: "#fff",
-    },
     align: "center"
   },
   dataLabels: {

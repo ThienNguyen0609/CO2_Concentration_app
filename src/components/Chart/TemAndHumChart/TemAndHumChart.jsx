@@ -29,7 +29,7 @@ const TemAndHumChart = ({temAndHum}) => {
                   opposite: true,
                   title: {
                     style: {
-                      color: "#fff",
+                      color: mode ? "#000" : "#fff",
                     },
                     text: "Humidity (%)"
                   },

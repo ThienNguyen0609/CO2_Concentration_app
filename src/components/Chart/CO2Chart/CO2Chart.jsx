@@ -1,6 +1,8 @@
 import ChartComponent from "../ChartComponent"
+import { useSelector } from "react-redux";
 
 const CO2Chart = ({co2}) => {
+  const mode = useSelector(state => state.mode.light);
     return (<>
         <div className="chart">
             <ChartComponent title={"CO2 CONCRENTRATION"} data={co2} type={"area"} 
@@ -8,7 +10,7 @@ const CO2Chart = ({co2}) => {
                 min: 0,
                 title: {
                   style: {
-                    color: "#fff",
+                    color: mode ? "#000" : "#fff",
                   },
                   text: "CO2 CONCRENTRATION (ppm)"
                 },

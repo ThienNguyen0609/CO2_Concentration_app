@@ -1,8 +1,10 @@
 import "./ChartComponent.scss";
 
 import Chart from "react-apexcharts";
+import { useSelector } from "react-redux";
 
 const ChartComponent = ({ title, data, yaxis, type, fill }) => {
+  const mode = useSelector(state => state.mode.light);
   // const testData = [{data: [
   //   [1713285141070, '500.00'],
   //   [1713285160882, '520.00'],
@@ -16,9 +18,18 @@ const ChartComponent = ({ title, data, yaxis, type, fill }) => {
     <>
       <div className="item">
         <Chart
-          options={{...options, yaxis: yaxis, title: {
-            ...options.title, text: title
-          }, fill: fill}}
+          options={{
+            ...options, 
+            yaxis: yaxis, 
+            title: {
+              ...options.title, text: title
+            }, 
+            fill: fill,
+            chart: {
+              ...options.chart,
+              foreColor: mode ? "#000" : "#fff"
+            }
+          }}
           type={type}
           series={data}
           width="100%"
@@ -52,7 +63,6 @@ const options = {
         },
       },
     },
-    foreColor: "#ffffff",
   },
   xaxis: {
     type: "datetime",
@@ -74,10 +84,7 @@ const options = {
         month: "MMMM yyyy",
         day: "d MMMM",
         hour: "HH:mm:ss",
-      },
-      style: {
-        color: "#fff",
-      },
+      }
     }
   },
   stroke: {

@@ -2,8 +2,7 @@ import "./ChartComponent.scss";
 
 import Chart from "react-apexcharts";
 
-const ChartComponent = ({ title, data }) => {
-  // console.log(title, data)
+const ChartComponent = ({ title, data, yaxis, type, fill }) => {
   // const testData = [{data: [
   //   [1713285141070, '500.00'],
   //   [1713285160882, '520.00'],
@@ -17,9 +16,11 @@ const ChartComponent = ({ title, data }) => {
     <>
       <div className="item">
         <Chart
-          options={options}
+          options={{...options, yaxis: yaxis, title: {
+            ...options.title, text: title
+          }, fill: fill}}
+          type={type}
           series={data}
-          type="area"
           width="100%"
         />
       </div>
@@ -77,35 +78,17 @@ const options = {
       style: {
         color: "#fff",
       },
-    },
-  },
-  yaxis: {
-    min: 0,
-    title: {
-      text: "CO2 Concentration",
-      style: {
-        color: "#fff",
-      },
-    },
+    }
   },
   stroke: {
     curve: "straight",
     width: 2,
   },
   title: {
-    text: "CO2 CONCENTRATION",
     style: {
       color: "#fff",
     },
-  },
-  fill: {
-    type: "gradient",
-    gradient: {
-      shadeIntensity: 1,
-      opacityFrom: 0.9,
-      opacityTo: 0.1,
-      stops: [0, 100],
-    },
+    align: "center"
   },
   dataLabels: {
     enabled: false,
@@ -121,6 +104,9 @@ const options = {
     x: {
       format: "HH:mm:ss",
     },
+  },
+  legend: {
+    show: false
   },
 };
 

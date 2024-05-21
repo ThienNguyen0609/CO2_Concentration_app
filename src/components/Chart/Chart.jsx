@@ -26,8 +26,10 @@ const Chart = () => {
     <>
       {!isLoading && (
         <div className="row">
-          <div className="col-1 d-flex flex-column">
+          <div className='col-12'>
             <button onClick={()=>handleTruncateData()} className="chart-btn">Clear chart</button>
+          </div>
+          <div className="col-6">
             <CO2Chart
               co2={[{
                 data: clear ? [] : data?.map((item, index) => {
@@ -37,14 +39,26 @@ const Chart = () => {
               }]}
             />
           </div>
-          <div className="col-1">
+          <div className="col-6">
             <TemAndHumChart 
-              temperature={[{
+              temAndHum={[{
                 data: clear ? [] : data?.map((item) => {
                     return [new Date(item.createdAt).getTime(), item.temperature];
                   }),
-                
+                name: "temperature",
+                type: "area"
+              }, {
+                data: clear ? [] : data?.map((item) => {
+                  return [new Date(item.createdAt).getTime(), item.humidity];
+                }),
+                name: "humidity",
+                type: "area"
               }]}
+              // categories={
+              //   clear ? [] : data?.map((item) => {
+              //     return [new Date(item.createdAt).getTime()];
+              //   })
+              // }
             />
           </div>
         </div>

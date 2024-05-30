@@ -5,7 +5,7 @@ const initialState = {
 };
 
 export const modeSlice = createSlice({
-  name: "counter",
+  name: "mode",
   initialState,
   reducers: {
     changeMode: (state, action) => {

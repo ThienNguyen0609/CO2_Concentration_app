@@ -1,14 +1,20 @@
 import Table from "react-bootstrap/Table";
-import { useGetConcentrationQuery } from "../../store/features/concentration/concentration";
 import { useSelector } from "react-redux";
+import { useEffect, useState } from "react"
+import { getConcentration } from "../../services/concentration";
+import _ from "lodash";
 
 function Data() {
-  const { data, isFetching, isLoading } = useGetConcentrationQuery();
+  const [data, setData] = useState([])
   const mode = useSelector(state => state.mode.light);
+  useEffect(() => {
+    const handleGetConcentration = async () => {
+      const response = await getConcentration()
+      setData(response)
+    }
 
-  console.log(data)
-
-  if (isLoading) return <div style={{color: "#fff"}}>Loading...</div>;
+    handleGetConcentration()
+  }, [])
   return (
     <Table striped bordered hover variant={mode ? "light" : "dark"}>
       <thead>
@@ -17,10 +23,11 @@ function Data() {
           <th>CO2</th>
           <th>Temperature</th>
           <th>Humidity</th>
+          <th>Time</th>
         </tr>
       </thead>
-      {isFetching ? (
-        "Fetching..."
+      {data && _.isEmpty(data) ? (
+        <tbody>No Data</tbody>
       ) : (
         <tbody>
           {data?.map((item, index) => {
@@ -30,6 +37,7 @@ function Data() {
                 <td>{item.co2}</td>
                 <td>{item.temperature}</td>
                 <td>{item.humidity}</td>
+                <td>{item.createdAt}</td>
               </tr>
             );
           })}

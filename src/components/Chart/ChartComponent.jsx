@@ -5,14 +5,6 @@ import { useSelector } from "react-redux";
 
 const ChartComponent = ({ title, data, yaxis, type, fill }) => {
   const mode = useSelector(state => state.mode.light);
-  // const testData = [{data: [
-  //   [1713285141070, '500.00'],
-  //   [1713285160882, '520.00'],
-  //   [1713285195812, '432.00'],
-  //   [1713285230717, '432.00'],
-  //   [1713285239576, '432.00'],
-  //   [1713285264314, '700.00']
-  // ]}]
 
   return (
     <>

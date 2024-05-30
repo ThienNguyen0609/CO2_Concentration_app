@@ -1,8 +1,6 @@
 import ChartComponent from "../ChartComponent"
-import { useSelector } from "react-redux";
 
 const TemAndHumChart = ({temAndHum}) => {
-  const mode = useSelector(state => state.mode.light);
     return (<>
         <div className="chart">
             <ChartComponent title={"TEMPERATURE AND HUMINITY"} type={"line"} data={temAndHum} 
@@ -15,7 +13,7 @@ const TemAndHumChart = ({temAndHum}) => {
                   },
                   title: {
                     style: {
-                      color: mode ? "#000" : "#fff",
+                      color: "#008FFB",
                     },
                     text: "Temperature (℃)"
                   },
@@ -29,7 +27,7 @@ const TemAndHumChart = ({temAndHum}) => {
                   opposite: true,
                   title: {
                     style: {
-                      color: mode ? "#000" : "#fff",
+                      color: "#00E396",
                     },
                     text: "Humidity (%)"
                   },

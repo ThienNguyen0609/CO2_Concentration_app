@@ -5,6 +5,11 @@ const getConcentration = async () => {
     return response
 }
 
+const postConcentration = async (data) => {
+    const response = await axios.post("/post/concentrationTest", data)
+    return response
+}
+
 const truncateConcentration = async () => {
     const response = await axios.delete("/truncate/concentrationTest")
     return response
@@ -12,5 +17,6 @@ const truncateConcentration = async () => {
 
 export {
     getConcentration,
+    postConcentration,
     truncateConcentration
 }

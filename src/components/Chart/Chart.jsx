@@ -2,40 +2,52 @@ import './Chart.scss';
 
 import CO2Chart from "./CO2Chart/CO2Chart";
 import TemAndHumChart from "./TemAndHumChart/TemAndHumChart";
-import { useGetConcentrationQuery } from "../../store/features/concentration/concentration";
 import _ from "lodash";
 import { truncateConcentration } from '../../services/concentration';
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { addToData, clearData } from '../../store/features/data/dataSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { postConcentration } from '../../services/concentration';
 
 const Chart = () => {
-  const [clear, setClear] = useState(false)
+  const dispatch = useDispatch()
   const mode = useSelector((state) => state.mode.light)
-  const { data, error, isLoading } = useGetConcentrationQuery(null, {
-    pollingInterval: 10000,
-    refetchOnMountOrArgChange: true,
-    skip: false,
-  });
+  const data = useSelector((state) => state.data.data)
+  const handleClearData = async () => {
+    dispatch(clearData([]))
+  }
+  // const handleAddToData = () => {
+  //   const action = async () => {
+  //     const data = {
+  //       co2: 304,
+  //       temperature: 30,
+  //       humidity: 80,
+  //       createdAt: Date.now()
+  //     }
+  //     dispatch(addToData(data))
+  //     const response = await postConcentration(data)
+  //     console.log(response)
+  //   }
+  //   setInterval(action, 5000)
+  // }
+
   const handleTruncateData = async () => {
     const response = await truncateConcentration()
-    setClear(draft => !draft)
-    setTimeout(() => {
-      setClear(draft => !draft)
-    }, 10000)
+    console.log(response)
   }
 
   return (
     <>
-      {!isLoading && (
-        <div className="row">
+      <div className="row">
           <div className={'col-12'+(mode ? ' light-mode' : ' dark-mode')}>
-            <button onClick={()=>handleTruncateData()} className="chart-btn font-color">Clear chart</button>
+            <button onClick={()=>handleClearData()} className="chart-btn font-color">Clear chart</button>
+            <button onClick={()=>handleAddToData()} className="chart-btn font-color">Add To chart</button>
+            <button onClick={()=>handleTruncateData()} className="chart-btn font-color">Clear Data</button>
           </div>
           <div className="col-6">
             <CO2Chart
               co2={[{
-                data: clear ? [] : data?.map((item, index) => {
-                  return [new Date(item.createdAt).getTime(), item.co2];
+                data: _.isEmpty(data) ? [] : data?.map((item, index) => {
+                  return [item.createdAt, item.co2];
                 }),
                 
               }]}
@@ -44,27 +56,21 @@ const Chart = () => {
           <div className="col-6">
             <TemAndHumChart 
               temAndHum={[{
-                data: clear ? [] : data?.map((item) => {
-                    return [new Date(item.createdAt).getTime(), item.temperature];
+                data: _.isEmpty(data) ? [] : data?.map((item) => {
+                    return [item.createdAt, item.temperature];
                   }),
                 name: "temperature",
                 type: "area"
               }, {
-                data: clear ? [] : data?.map((item) => {
-                  return [new Date(item.createdAt).getTime(), item.humidity];
+                data: _.isEmpty(data) ? [] : data?.map((item) => {
+                  return [item.createdAt, item.humidity];
                 }),
                 name: "humidity",
                 type: "area"
               }]}
-              // categories={
-              //   clear ? [] : data?.map((item) => {
-              //     return [new Date(item.createdAt).getTime()];
-              //   })
-              // }
             />
           </div>
         </div>
-      )}
     </>
   );
 };

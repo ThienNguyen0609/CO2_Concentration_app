@@ -6,7 +6,7 @@ export const concentrationApi = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: import.meta.env.VITE_SERVER_LINK }),
   endpoints: (builder) => ({
     getConcentration: builder.query({
-      query: () => "/get/concentrationTest",
+      query: () => "get/concentrationTest",
     }),
   }),
 })

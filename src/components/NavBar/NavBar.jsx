@@ -18,6 +18,7 @@ const NavBar = () => {
         <div className="container-wrapper nav-inner" style={{height: "100%"}}>
           <div className="nav-link">
             <NavLink to={'/'} className="nav-item">Chart</NavLink>
+            <NavLink to={'/CO2chart'} className="nav-item">CO2 Chart</NavLink>
             <NavLink to={'/data'} className="nav-item">Data</NavLink>
           </div>
           <div className="bg-mode">

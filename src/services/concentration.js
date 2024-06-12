@@ -5,6 +5,11 @@ const getConcentration = async () => {
     return response
 }
 
+const getConcentrationByTimestamp = async (timestamp) => {
+    const response = await axios.post("/get/concentrationTest/timestamp", timestamp)
+    return response
+}
+
 const postConcentration = async (data) => {
     const response = await axios.post("/post/concentrationTest", data)
     return response
@@ -18,5 +23,6 @@ const truncateConcentration = async () => {
 export {
     getConcentration,
     postConcentration,
-    truncateConcentration
+    truncateConcentration,
+    getConcentrationByTimestamp
 }

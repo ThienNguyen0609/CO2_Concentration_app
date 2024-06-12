@@ -12,6 +12,7 @@ const Chart = () => {
   const dispatch = useDispatch()
   const mode = useSelector((state) => state.mode.light)
   const data = useSelector((state) => state.data.data)
+
   const handleClearData = async () => {
     dispatch(clearData([]))
   }
@@ -39,8 +40,8 @@ const Chart = () => {
     <>
       <div className="row">
           <div className={'col-12'+(mode ? ' light-mode' : ' dark-mode')}>
-            <button onClick={()=>handleClearData()} className="chart-btn font-color">Clear chart</button>
-            <button onClick={()=>handleAddToData()} className="chart-btn font-color">Add To chart</button>
+            <button onClick={()=>handleClearData()} className="chart-btn font-color me-2">Clear chart</button>
+            {/* <button onClick={()=>handleAddToData()} className="chart-btn font-color">Add To chart</button> */}
             <button onClick={()=>handleTruncateData()} className="chart-btn font-color">Clear Data</button>
           </div>
           <div className="col-6">

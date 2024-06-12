@@ -47,7 +47,7 @@ const ChartComponent = ({ title, data, yaxis, type, fill }) => {
 const options = {
   chart: {
     id: "chart 2",
-    stacked: true,
+    stacked: false,
     toolbar: {
       autoSelected: "zoom",
       show: true,

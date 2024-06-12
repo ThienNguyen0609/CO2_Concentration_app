@@ -16,6 +16,10 @@ function Data() {
     handleGetConcentration()
   }, [])
   return (
+    <>
+    {data && _.isEmpty(data) ? (
+      <div>No Data</div>
+    ) : (
     <Table striped bordered hover variant={mode ? "light" : "dark"}>
       <thead>
         <tr>
@@ -26,10 +30,7 @@ function Data() {
           <th>Time</th>
         </tr>
       </thead>
-      {data && _.isEmpty(data) ? (
-        <tbody>No Data</tbody>
-      ) : (
-        <tbody>
+      <tbody>
           {data?.map((item, index) => {
             return (
               <tr key={item.id}>
@@ -42,8 +43,9 @@ function Data() {
             );
           })}
         </tbody>
-      )}
     </Table>
+    )}
+    </>
   );
 }
 

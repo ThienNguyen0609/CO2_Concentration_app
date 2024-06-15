@@ -11,53 +11,53 @@ const CO2Chart = () => {
   const [series, setSeries] = useState([]);
   const [categories, setCategiries] = useState([])
 
-  useEffect(() => {
-    const handleGetByTimeStamp = async () => {
-      const timestampForSeries1 = {
-        min: "2024-06-10T11:24:39.000Z",
-        max: "2024-06-10T14:25:00.000Z"
-      }
-      const timestampForSeries2 = {
-        min: "2024-06-11T06:27:23.000Z",
-        max: "2024-06-11T09:28:00.000Z"
-      }
-      const timestampForSeries3 = {
-        min: "2024-06-12T07:51:22.000Z",
-        max: "2024-06-12T10:52:00.000Z"
-      }
-      const series1 = await getConcentrationByTimestamp(timestampForSeries1)
-      const series2 = await getConcentrationByTimestamp(timestampForSeries2)
-      const series3 = await getConcentrationByTimestamp(timestampForSeries3)
-      // const series1 = await getConcentrationByTimestamp()
-      // const series1 = await getConcentrationByTimestamp()
-      console.log("series1:", series1)
-      console.log("series2:", series2)
-      console.log("series3:", series3)
-      setSeries([
-        {
-          name: "1mg",
-          data: series1.map(item => item.co2)
-        },
-        {
-          name: "2mg",
-          data: series2.filter((item, index) => index < 1978).map(item => item.co2),
-        },
-        {
-          name: "3mg",
-          data: series3.filter((item, index) => index < 1978).map(item => item.co2),
-        },
-      ])
-      const cate = []
-      let timestamp = 1704067200000;
-      for(let i=0; i<1978; i++) {
-        cate.push(timestamp)
-        timestamp+=5000
-      }
-      setCategiries(cate)
-    }
+  // useEffect(() => {
+  //   const handleGetByTimeStamp = async () => {
+  //     const timestampForSeries1 = {
+  //       min: "2024-06-15T10:48:25.000Z",
+  //       max: "2024-06-15T11:48:25.000Z"
+  //     }
+  //     const timestampForSeries2 = {
+  //       min: "2024-06-15T11:48:25.000Z",
+  //       max: "2024-06-15T12:48:25.000Z"
+  //     }
+  //     // const timestampForSeries3 = {
+  //     //   min: "2024-06-12T07:51:22.000Z",
+  //     //   max: "2024-06-12T10:52:00.000Z"
+  //     // }
+  //     const series1 = await getConcentrationByTimestamp(timestampForSeries1)
+  //     const series2 = await getConcentrationByTimestamp(timestampForSeries2)
+  //     // const series3 = await getConcentrationByTimestamp(timestampForSeries3)
+  //     // const series1 = await getConcentrationByTimestamp()
+  //     // const series1 = await getConcentrationByTimestamp()
+  //     console.log("series1:", series1)
+  //     console.log("series2:", series2)
+  //     // console.log("series3:", series3)
+  //     setSeries([
+  //       {
+  //         name: "1mg",
+  //         data: series1.map(item => item.co2)
+  //       },
+  //       {
+  //         name: "2mg",
+  //         data: series2.filter((item, index) => index < 1978).map(item => item.co2),
+  //       },
+  //       // {
+  //       //   name: "3mg",
+  //       //   data: series3.filter((item, index) => index < 1978).map(item => item.co2),
+  //       // },
+  //     ])
+  //     const cate = []
+  //     let timestamp = 1704067200000;
+  //     for(let i=0; i<600; i++) {
+  //       cate.push(timestamp)
+  //       timestamp+=6000
+  //     }
+  //     setCategiries(cate)
+  //   }
 
-    handleGetByTimeStamp()
-  }, [])
+  //   handleGetByTimeStamp()
+  // }, [])
   return (
     <>
       <Chart

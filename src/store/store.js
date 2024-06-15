@@ -4,6 +4,7 @@ import { setupListeners } from '@reduxjs/toolkit/query'
 import { concentrationApi } from './features/concentration/concentration';
 import modeReducer from './features/darkLightMode/modeSlice'
 import dataReducer from './features/data/dataSlice'
+import wssReducer from './features/wss/wssSlice'
 
 export const store = configureStore({
   reducer: {
@@ -11,6 +12,7 @@ export const store = configureStore({
     [concentrationApi.reducerPath]: concentrationApi.reducer,
     mode: modeReducer,
     data: dataReducer,
+    wss: wssReducer
   },
   // Adding the api middleware enables caching, invalidation, polling,
   // and other useful features of `rtk-query`.

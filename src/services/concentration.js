@@ -1,22 +1,22 @@
 import axios from '../configs/axios'
 
 const getConcentration = async () => {
-    const response = await axios.get("/get/concentrationTest")
+    const response = await axios.get(`/get/${import.meta.env.VITE_PATH_LINK}`)
     return response
 }
 
 const getConcentrationByTimestamp = async (timestamp) => {
-    const response = await axios.post("/get/concentrationTest/timestamp", timestamp)
+    const response = await axios.post(`/get/${import.meta.env.VITE_PATH_LINK}/timestamp`, timestamp)
     return response
 }
 
 const postConcentration = async (data) => {
-    const response = await axios.post("/post/concentrationTest", data)
+    const response = await axios.post(`/post/${import.meta.env.VITE_PATH_LINK}`, data)
     return response
 }
 
 const truncateConcentration = async () => {
-    const response = await axios.delete("/truncate/concentrationTest")
+    const response = await axios.delete(`/truncate/${import.meta.env.VITE_PATH_LINK}`)
     return response
 }
 

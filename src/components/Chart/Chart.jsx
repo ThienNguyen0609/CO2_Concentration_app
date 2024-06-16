@@ -13,16 +13,17 @@ const Chart = () => {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode.light);
   const data = useSelector((state) => state.data.data);
+  const packageLosing = useSelector((state) => state.data.packageLosing);
   const flag = useSelector((state) => state.wss.flag);
 
   const handleClearData = async () => {
     dispatch(clearData([]))
-    notify("clear chart successfully!");
+    notify("clear chart successfully!", "success");
   }
 
   const handleTruncateData = async () => {
     const response = await truncateConcentration()
-    notify(response);
+    notify(response, "success");
   }
 
   return (
@@ -31,11 +32,11 @@ const Chart = () => {
         <div className={"col-12" + (mode ? " light-mode" : " dark-mode")}>
           <button onClick={() => {
             if(!flag) dispatch(changeFlag(true))
-            else notify("The device is connected.")
+            else notify("The device is connected.", "warning")
           }} className="chart-btn font-color me-2">Start</button>
           <button onClick={() => {
             if(flag) dispatch(changeFlag(false))
-            else notify("The device has stopped connecting.")
+            else notify("The device has stopped connecting.", "warning")
           }} className="chart-btn font-color me-2">Stop</button>
           <button onClick={() => handleClearData()} className="chart-btn font-color me-2">Clear chart</button>
           <button onClick={() => handleTruncateData()} className="chart-btn font-color">Clear Data</button>
@@ -69,6 +70,11 @@ const Chart = () => {
             ]}
           />
         </div>
+        {!_.isEmpty(packageLosing) && (
+          <div className="col-12 mt-3" style={{color: mode ? "#000" : "#fff"}}>
+            Package lost: {packageLosing.toString()}
+          </div>
+        )}
       </div>
     </>
   );

@@ -1,162 +1,38 @@
-import { useState } from "react";
 import "./CO2Chart.scss";
 
-import Chart from "react-apexcharts";
-import { useSelector } from "react-redux";
-import { useEffect } from "react"
-import { getConcentrationByTimestamp } from "../../services/concentration";
+import { useState, useEffect } from "react";
+import {
+  handleGetByTimeStamp1h,
+  handleGetByTimeStamp2h,
+  handleGetByTimeStamp3h,
+} from "../../services/CO2ChartService";
+import CO2ChartItem from "./CO2ChartItem/CO2ChartItem";
+import _ from "lodash";
 
 const CO2Chart = () => {
-  const mode = useSelector((state) => state.mode.light);
-  const [series, setSeries] = useState([]);
-  const [categories, setCategiries] = useState([])
+  const [series1, setSeries1] = useState([]);
+  const [series2, setSeries2] = useState([]);
+  const [series3, setSeries3] = useState([]);
+  const [categories1, setCategiries1] = useState([]);
+  const [categories2, setCategiries2] = useState([]);
+  const [categories3, setCategiries3] = useState([]);
 
   useEffect(() => {
-    const handleGetByTimeStamp = async () => {
-      const timestampForSeries1 = {
-        min: "2024-06-15T14:19:05.000Z",
-        max: "2024-06-15T17:19:05.099Z"
-      }
-      // const timestampForSeries2 = {
-      //   min: "2024-06-15T11:48:25.000Z",
-      //   max: "2024-06-15T12:48:25.000Z"
-      // }
-      // const timestampForSeries3 = {
-      //   min: "2024-06-12T07:51:22.000Z",
-      //   max: "2024-06-12T10:52:00.000Z"
-      // }
-      const series1 = await getConcentrationByTimestamp(timestampForSeries1)
-      // const series2 = await getConcentrationByTimestamp(timestampForSeries2)
-      // const series3 = await getConcentrationByTimestamp(timestampForSeries3)
-      // const series1 = await getConcentrationByTimestamp()
-      // const series1 = await getConcentrationByTimestamp()
-      console.log("series1:", series1)
-      // console.log("series2:", series2)
-      // console.log("series3:", series3)
-      setSeries([
-        {
-          name: "1mg",
-          data: [400, ...series1.map(item => item.co2)]
-        },
-        // {
-        //   name: "2mg",
-        //   data: series2.filter((item, index) => index < 1978).map(item => item.co2),
-        // },
-        // {
-        //   name: "3mg",
-        //   data: series3.filter((item, index) => index < 1978).map(item => item.co2),
-        // },
-      ])
-      const cate = []
-      let timestamp = 1704067200000;
-      for(let i=0; i<1801; i++) {
-        cate.push(timestamp)
-        timestamp+=6000
-      }
-      setCategiries(cate)
-    }
-
-    handleGetByTimeStamp()
-  }, [])
+    handleGetByTimeStamp1h(setSeries1, setCategiries1);
+    handleGetByTimeStamp2h(setSeries2, setCategiries2);
+    handleGetByTimeStamp3h(setSeries3, setCategiries3);
+  }, []);
   return (
     <>
-      <Chart
-        options={{
-          ...options,
-          yaxis: {
-            ...options.yaxis,
-            title: {
-              ...options.yaxis.title,
-              style: {
-                color: mode ? "#000" : "#fff",
-              },
-            },
-          },
-          xaxis: {
-            ...options.xaxis,
-            categories: categories,
-            title: {
-              ...options.xaxis.title,
-              style: {
-                color: mode ? "#000" : "#fff",
-              },
-            },
-          },
-          title: {
-            ...options.title,
-            style: {
-              color: mode ? "#000" : "#fff",
-            },
-          },
-          chart: {
-            ...options.chart,
-            foreColor: mode ? "#000" : "#fff",
-          },
-        }}
-        type={"line"}
-        series={series}
-        width="100%"
-      />
+      {!_.isEmpty(series1) && !_.isEmpty(series2) && !_.isEmpty(series3) &&
+        <div>
+          <CO2ChartItem series={series3} categories={categories3} title={"3 HOURS"} />
+          <CO2ChartItem series={series2} categories={categories2} title={"2 HOURS"} />
+          <CO2ChartItem series={series1} categories={categories1} title={"1 HOURS"} />
+        </div>
+      }
     </>
   );
-};
-
-const options = {
-  chart: {
-    height: 350,
-    type: "line",
-    stacked: false,
-  },
-  xaxis: {
-    type: "datetime",
-    tickAmount: 6,
-    title: {
-      text: "TIME (HOURS)",
-    },
-    tickPlacement: "on",
-    label: {
-      datetimeUTC: true,
-      datetimeFormatter: {
-        year: "yyyy",
-        month: "MMMM yyyy",
-        day: "d MMMM",
-        hour: "HH:mm:ss",
-      },
-    },
-  },
-  yaxis: {
-    min: 0,
-    title: {
-      text: "CO2 CONCRENTRATION (ppm)",
-    },
-  },
-  stroke: {
-    curve: "straight",
-    width: 2,
-  },
-  title: {
-    align: "center",
-    text: "CO2 CONCRENTRATION",
-  },
-  dataLabels: {
-    enabled: false,
-  },
-  markers: {
-    size: 0,
-    strokeWidth: 0,
-    hover: {
-      size: 8,
-    },
-  },
-  tooltip: {
-    x: {
-      format: "HH:mm:ss",
-    },
-  },
-  legend: {
-    show: true,
-    position: "top",
-  },
 };
 
 export default CO2Chart;

@@ -1,8 +1,8 @@
 import { toast } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-export const notify = (message) => {
-  toast.success(message, {
+export const notify = (message, notifyType) => {
+  toast(message, {
     position: "top-right",
     autoClose: 5000,
     hideProgressBar: false,
@@ -11,5 +11,6 @@ export const notify = (message) => {
     draggable: true,
     progress: undefined,
     theme: "light",
+    type: notifyType
   });
 };

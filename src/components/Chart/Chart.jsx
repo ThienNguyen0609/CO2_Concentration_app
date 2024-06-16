@@ -13,7 +13,8 @@ const Chart = () => {
   const dispatch = useDispatch();
   const mode = useSelector((state) => state.mode.light);
   const data = useSelector((state) => state.data.data);
-  const packageLosing = useSelector((state) => state.data.packageLosing);
+  const wssPackageLost = useSelector((state) => state.data.wssPackageLost);
+  const serverPackageLost = useSelector((state) => state.data.serverPackageLost);
   const flag = useSelector((state) => state.wss.flag);
 
   const handleClearData = async () => {
@@ -70,9 +71,14 @@ const Chart = () => {
             ]}
           />
         </div>
-        {!_.isEmpty(packageLosing) && (
+        {!_.isEmpty(wssPackageLost) && (
           <div className="col-12 mt-3" style={{color: mode ? "#000" : "#fff"}}>
-            Package lost: {packageLosing.toString()}
+            Package lost: {wssPackageLost.toString()}
+          </div>
+        )}
+        {!_.isEmpty(serverPackageLost) && (
+          <div className="col-12 mt-3" style={{color: mode ? "#000" : "#fff"}}>
+            Package lost: {serverPackageLost.toString()}
           </div>
         )}
       </div>

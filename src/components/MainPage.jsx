@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar/NavBar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToData, setPackageLose } from "../store/features/data/dataSlice";
+import { addToData, setServerPackageLost, setWssPackageLost } from "../store/features/data/dataSlice";
 import { postConcentration } from "../services/concentration";
 import { ToastContainer } from "react-toastify";
 import { notify } from "../services/toastify";
@@ -42,8 +42,16 @@ const MainPage = () => {
         const getTime = Date.now();
         const response = JSON.parse(event.data)
         if(!_.isEmpty(data)) {
-          packNum = [...data].reverse()[0].packageNumber
-          if(count === packNum+2) dispatch(setPackageLose(count-1))
+          let cnt = count
+          let cntFlag = true
+          do {
+            packNum = data[data.length-1].packageNumber
+            if(cnt !== packNum+1) {
+              dispatch(setWssPackageLost(cnt-1))
+              cnt--
+            }
+            else cntFlag = false
+          } while(cntFlag)
         }
         let request = {};
         clearTimeout(timeout)
@@ -72,11 +80,13 @@ const MainPage = () => {
           ...request,
           createdAt: getTime
         }))
-        await postConcentration({
+        const resServer = await postConcentration({
           ...request,
           createdAt: getTime
         })
-        console.log("to server: ", Date.now() - getTime)
+        if(resServer.lostError) {
+          dispatch(setServerPackageLost(resServer.packageLost))
+        }
       };
     }
     //clean up function

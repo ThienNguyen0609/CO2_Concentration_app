@@ -2,7 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   data: [],
-  packageLosing: []
+  wssPackageLost: [],
+  serverPackageLost: []
 };
 
 export const dataSlice = createSlice({
@@ -15,13 +16,16 @@ export const dataSlice = createSlice({
     clearData: (state, action) => {
       state.data = action.payload
     },
-    setPackageLose: (state, action) => {
-      state.packageLosing.push(action.payload)
+    setWssPackageLost: (state, action) => {
+      state.wssPackageLost.push(action.payload)
+    },
+    setServerPackageLost: (state, action) => {
+      state.serverPackageLost.push(...action.payload)
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addToData, clearData, setPackageLose } = dataSlice.actions;
+export const { addToData, clearData, setWssPackageLost, setServerPackageLost } = dataSlice.actions;
 
 export default dataSlice.reducer;

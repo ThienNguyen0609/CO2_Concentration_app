@@ -70,7 +70,7 @@ const MainPage = () => {
           createdAt: getTime
         })
         if(resServer.lostError) {
-          dispatch(setServerPackageLost(resServer.packageLost))
+          dispatch(setServerPackageLost([...resServer.packageLost].reverse()))
         }
       };
     }

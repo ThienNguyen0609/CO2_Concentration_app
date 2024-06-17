@@ -27,6 +27,7 @@ function Data() {
           <th>CO2</th>
           <th>Temperature</th>
           <th>Humidity</th>
+          <th>Index</th>
           <th>Time</th>
         </tr>
       </thead>
@@ -38,6 +39,7 @@ function Data() {
                 <td>{item.co2}</td>
                 <td>{item.temperature}</td>
                 <td>{item.humidity}</td>
+                <td>{item.packageNumber}</td>
                 <td>{item.createdAt}</td>
               </tr>
             );

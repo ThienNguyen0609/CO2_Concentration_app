@@ -4,7 +4,7 @@ import CO2Chart from "./CO2Chart/CO2Chart";
 import TemAndHumChart from "./TemAndHumChart/TemAndHumChart";
 import _ from "lodash";
 import { truncateConcentration } from "../../services/concentration";
-import { clearData } from "../../store/features/data/dataSlice";
+import { clearData, clearPackageLost, setServerPackageLost, setWssPackageLost } from "../../store/features/data/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { notify } from "../../services/toastify";
 import { changeFlag } from "../../store/features/wss/wssSlice";
@@ -19,6 +19,7 @@ const Chart = () => {
 
   const handleClearData = async () => {
     dispatch(clearData([]))
+    dispatch(clearPackageLost([]))
     notify("clear chart successfully!", "success");
   }
 
@@ -71,14 +72,14 @@ const Chart = () => {
             ]}
           />
         </div>
-        {!_.isEmpty(wssPackageLost) && (
+        {!_.isEmpty(wssPackageLost) && wssPackageLost && wssPackageLost.length > 0 && (
           <div className="col-12 mt-3" style={{color: mode ? "#000" : "#fff"}}>
-            Package lost: {wssPackageLost.toString()}
+            Wss package lost: {wssPackageLost.toString()}
           </div>
         )}
-        {!_.isEmpty(serverPackageLost) && (
+        {!_.isEmpty(serverPackageLost) && serverPackageLost && serverPackageLost.length > 0 && (
           <div className="col-12 mt-3" style={{color: mode ? "#000" : "#fff"}}>
-            Package lost: {serverPackageLost.toString()}
+            Server package lost: {serverPackageLost.toString()}
           </div>
         )}
       </div>

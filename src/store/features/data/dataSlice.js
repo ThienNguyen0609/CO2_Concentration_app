@@ -21,11 +21,15 @@ export const dataSlice = createSlice({
     },
     setServerPackageLost: (state, action) => {
       state.serverPackageLost.push(...action.payload)
+    },
+    clearPackageLost: (state, action) => {
+      state.wssPackageLost = action.payload
+      state.serverPackageLost = action.payload
     }
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { addToData, clearData, setWssPackageLost, setServerPackageLost } = dataSlice.actions;
+export const { addToData, clearData, setWssPackageLost, setServerPackageLost, clearPackageLost } = dataSlice.actions;
 
 export default dataSlice.reducer;

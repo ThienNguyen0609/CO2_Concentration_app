@@ -12,16 +12,15 @@ import _ from "lodash";
 
 const MainPage = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.data.data);
+  const CO2data = useSelector((state) => state.data.data);
   const flag = useSelector((state) => state.wss.flag);
 
   useEffect(() => {
     let socket;
     let interval;
-    let timeout;
     let timestamp;
+    let timeout;
     let count = 0;
-    let packNum;
     if(flag) {
       socket = new WebSocket("ws://192.168.43.249:80/ws")
       socket.onopen = (event) => {
@@ -31,8 +30,8 @@ const MainPage = () => {
           timestamp = Date.now()
           count++;
           timeout = setTimeout(() => {
-            console.log("cannot clear timeout")
-          }, 6000)
+            dispatch(setWssPackageLost(count))
+          }, 5000)
         }, 6000)
       };
       socket.onerror = (event) => {
@@ -41,22 +40,8 @@ const MainPage = () => {
       socket.onmessage = async (event) => {
         const getTime = Date.now();
         const response = JSON.parse(event.data)
-        if(!_.isEmpty(data)) {
-          let cnt = count
-          let cntFlag = true
-          do {
-            packNum = data[data.length-1].packageNumber
-            if(cnt !== packNum+1) {
-              dispatch(setWssPackageLost(cnt-1))
-              cnt--
-            }
-            else cntFlag = false
-          } while(cntFlag)
-        }
+        clearTimeout(timeout);
         let request = {};
-        clearTimeout(timeout)
-        console.log("count:", count)
-        console.log("time:", getTime - timestamp)
         if(response.status) {
           request = {
             co2: response.co2,

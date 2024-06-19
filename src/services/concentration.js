@@ -20,9 +20,15 @@ const truncateConcentration = async () => {
     return response
 }
 
+const deleteConcentrationByTime = async (timestamp) => {
+    const response = await axios.post(`/delete/${import.meta.env.VITE_PATH_LINK}/timestamp`, timestamp)
+    return response
+}
+
 export {
     getConcentration,
     postConcentration,
     truncateConcentration,
-    getConcentrationByTimestamp
+    getConcentrationByTimestamp,
+    deleteConcentrationByTime
 }

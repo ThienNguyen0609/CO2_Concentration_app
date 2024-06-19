@@ -3,29 +3,28 @@ import "./Chart.scss";
 import CO2Chart from "./CO2Chart/CO2Chart";
 import TemAndHumChart from "./TemAndHumChart/TemAndHumChart";
 import _ from "lodash";
-import { truncateConcentration } from "../../services/concentration";
-import { clearData, clearPackageLost, setServerPackageLost, setWssPackageLost } from "../../store/features/data/dataSlice";
+import { clearData, clearPackageLost } from "../../store/features/data/dataSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { notify } from "../../services/toastify";
 import { changeFlag } from "../../store/features/wss/wssSlice";
+import TruncateModal from "../Modal/TruncateModal";
+import DeleteModal from "../Modal/DeleteModal";
+import { useState } from "react";
 
 const Chart = () => {
   const dispatch = useDispatch();
+  const [truncateShow, setTruncateShow] = useState(false);
+  const [deleteShow, setDeleteShow] = useState(false);
   const mode = useSelector((state) => state.mode.light);
   const data = useSelector((state) => state.data.data);
+  const flag = useSelector((state) => state.wss.flag);
   const wssPackageLost = useSelector((state) => state.data.wssPackageLost);
   const serverPackageLost = useSelector((state) => state.data.serverPackageLost);
-  const flag = useSelector((state) => state.wss.flag);
 
   const handleClearData = async () => {
     dispatch(clearData([]))
     dispatch(clearPackageLost([]))
     notify("clear chart successfully!", "success");
-  }
-
-  const handleTruncateData = async () => {
-    const response = await truncateConcentration()
-    notify(response, "success");
   }
 
   return (
@@ -41,7 +40,10 @@ const Chart = () => {
             else notify("The device has stopped connecting.", "warning")
           }} className="chart-btn font-color me-2">Stop</button>
           <button onClick={() => handleClearData()} className="chart-btn font-color me-2">Clear chart</button>
-          <button onClick={() => handleTruncateData()} className="chart-btn font-color">Clear Data</button>
+          <button onClick={() => setTruncateShow(true)} className="chart-btn font-color me-2">Clear Data</button>
+          <TruncateModal show={truncateShow} handleClose={setTruncateShow} />
+          <button onClick={() => setDeleteShow(true)} className="chart-btn font-color">Delete Data By Time</button>
+          <DeleteModal show={deleteShow} handleClose={setDeleteShow} />
         </div>
         <div className="col-6">
           <CO2Chart

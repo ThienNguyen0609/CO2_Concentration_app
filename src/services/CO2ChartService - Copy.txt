@@ -1,18 +1,15 @@
 import { getConcentrationByTimestamp } from "./concentration";
 
 const handlePackageLost = (len, seriesLen, series, seriesName, data) => {
-  let quantityPackageLost = len - seriesLen
+  let qualityPackageLost = len - seriesLen
   let count = 1
-  console.log("CO2 ", seriesName);
+  console.log(seriesName);
   series.forEach((item, index, array) => {
-    if (index + count <= item.packageNumber-1 && quantityPackageLost !== 0) {
-      const boolen = array.some(i => i.packageNumber === index + 1)
-      if (!boolen) {
-        console.log(index + 1)
-        quantityPackageLost--;
-        data.splice(index + 1, 0, null)
-        count++;
-      }
+    if (index + count === item.packageNumber - 1 && array[index + 1].packageNumber !== item.packageNumber && qualityPackageLost !== 0) {
+      console.log(item.packageNumber - 1)
+      qualityPackageLost--;
+      data.splice(index + count, 0, null)
+      count++;
     }
   })
 }
@@ -66,32 +63,31 @@ const handleGetByTimeStamp3h = async (setSeries, setCategiries) => {
 
   const series1 = await getConcentrationByTimestamp(timestampForSeries1);
   let data1 = [series1[0].co2, ...series1.map(item => item.co2)]
-  if (series1.length < 1800) {
+  if(series1.length < 1800) {
     handlePackageLost(1800, series1.length, series1, "3h series1", data1)
   }
 
   const series2 = await getConcentrationByTimestamp(timestampForSeries2);
   let data2 = [series2[0].co2, ...series2.map(item => item.co2)]
-  if (series2.length < 1800) {
+  if(series2.length < 1800) {
     handlePackageLost(1800, series2.length, series2, "3h series2", data2)
   }
 
   const series3 = await getConcentrationByTimestamp(timestampForSeries3);
-  // console.log(series3)
   let data3 = [series3[0].co2, ...series3.map(item => item.co2)]
-  if (series3.length < 1800) {
+  if(series3.length < 1800) {
     handlePackageLost(1800, series3.length, series3, "3h series3", data3)
   }
 
   const series4 = await getConcentrationByTimestamp(timestampForSeries4);
   let data4 = [series4[0].co2, ...series4.map(item => item.co2)]
-  if (series4.length < 1800) {
+  if(series4.length < 1800) {
     handlePackageLost(1800, series4.length, series4, "3h series4", data4)
   }
 
   const series5 = await getConcentrationByTimestamp(timestampForSeries5);
   let data5 = [series5[0].co2, ...series5.map(item => item.co2)]
-  if (series5.length < 1800) {
+  if(series5.length < 1800) {
     handlePackageLost(1800, series5.length, series5, "3h series5", data5)
   }
 
@@ -176,35 +172,35 @@ const handleGetByTimeStamp2h = async (setSeries, setCategiries) => {
     min: "2024-06-24T14:41:26.000Z",
     max: "2024-06-24T16:41:26.000Z"
   }
-
-
+  
+  
   const series1 = await getConcentrationByTimestamp(timestampForSeries1);
   let data1 = [series1[0].co2, ...series1.map(item => item.co2)]
-  if (series1.length < 1200) {
+  if(series1.length < 1200) {
     handlePackageLost(1200, series1.length, series1, "2h series1", data1)
   }
 
   const series2 = await getConcentrationByTimestamp(timestampForSeries2);
   let data2 = [series2[0].co2, ...series2.map(item => item.co2)]
-  if (series2.length < 1200) {
+  if(series2.length < 1200) {
     handlePackageLost(1200, series2.length, series2, "2h series2", data2)
   }
 
   const series3 = await getConcentrationByTimestamp(timestampForSeries3);
   let data3 = [series3[0].co2, ...series3.map(item => item.co2)]
-  if (series3.length < 1200) {
+  if(series3.length < 1200) {
     handlePackageLost(1200, series3.length, series3, "2h series3", data3)
   }
 
   const series4 = await getConcentrationByTimestamp(timestampForSeries4);
   let data4 = [series4[0].co2, ...series4.map(item => item.co2)]
-  if (series4.length < 1200) {
+  if(series4.length < 1200) {
     handlePackageLost(1200, series4.length, series4, "2h series4", data4)
   }
 
   const series5 = await getConcentrationByTimestamp(timestampForSeries5);
   let data5 = [series5[0].co2, ...series5.map(item => item.co2)]
-  if (series5.length < 1200) {
+  if(series5.length < 1200) {
     handlePackageLost(1200, series5.length, series5, "2h series5", data5)
   }
 
@@ -264,7 +260,7 @@ const handleGetByTimeStamp1h = async (setSeries, setCategiries) => {
   //   min: "2024-06-20T10:24:50.000Z",
   //   max: "2024-06-20T11:24:50.000Z"
   // }
-
+  
 
   // -------------------------------- Real ---------------------------------//
   const timestampForSeries1 = {
@@ -290,32 +286,32 @@ const handleGetByTimeStamp1h = async (setSeries, setCategiries) => {
 
   const series1 = await getConcentrationByTimestamp(timestampForSeries1);
   let data1 = [series1[0].co2, ...series1.map(item => item.co2)]
-  if (series1.length < 600) {
-    handlePackageLost(600, series1.length, series1, "1h series1", data1)
+  if(series1.length < 600) {
+    handlePackageLost(600, series1.length, series1,  "1h series1",data1)
   }
 
   const series2 = await getConcentrationByTimestamp(timestampForSeries2);
   let data2 = [series2[0].co2, ...series2.map(item => item.co2)]
-  if (series2.length < 600) {
-    handlePackageLost(600, series2.length, series2, "1h series2", data2)
+  if(series2.length < 600) {
+    handlePackageLost(600, series2.length, series2,  "1h series2",data2)
   }
 
   const series3 = await getConcentrationByTimestamp(timestampForSeries3);
   let data3 = [series3[0].co2, ...series3.map(item => item.co2)]
-  if (series3.length < 600) {
-    handlePackageLost(600, series3.length, series3, "1h series3", data3)
+  if(series3.length < 600) {
+    handlePackageLost(600, series3.length, series3,  "1h series3",data3)
   }
 
   const series4 = await getConcentrationByTimestamp(timestampForSeries4);
   let data4 = [series4[0].co2, ...series4.map(item => item.co2)]
-  if (series4.length < 600) {
-    handlePackageLost(600, series4.length, series4, "1h series4", data4)
+  if(series4.length < 600) {
+    handlePackageLost(600, series4.length, series4,  "1h series4",data4)
   }
 
   const series5 = await getConcentrationByTimestamp(timestampForSeries5);
   let data5 = [series5[0].co2, ...series5.map(item => item.co2)]
-  if (series5.length < 600) {
-    handlePackageLost(600, series5.length, series5, "1h series5", data5)
+  if(series5.length < 600) {
+    handlePackageLost(600, series5.length, series5,  "1h series5",data5)
   }
 
   setSeries([

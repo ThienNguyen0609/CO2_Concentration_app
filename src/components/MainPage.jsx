@@ -20,7 +20,7 @@ const MainPage = () => {
     let interval;
     let timestamp;
     let timeout;
-    let count = 0;
+    let index = 0;
     if(flag) {
       socket = new WebSocket("ws://192.168.43.249:80/ws")
       socket.onopen = (event) => {
@@ -28,9 +28,9 @@ const MainPage = () => {
         interval = setInterval(() => {
           socket.send("get");
           timestamp = Date.now()
-          count++;
+          index++;
           timeout = setTimeout(() => {
-            dispatch(setWssPackageLost(count))
+            dispatch(setWssPackageLost(index))
           }, 5000)
         }, 6000)
       };
@@ -48,7 +48,7 @@ const MainPage = () => {
             temperature: response.temperature.toFixed(2),
             humidity: response.humidity.toFixed(2),
             packageTime: getTime - timestamp,
-            packageNumber: count
+            packageNumber: index
           }
         }
         else {
@@ -57,7 +57,7 @@ const MainPage = () => {
             temperature: null,
             humidity: null,
             packageTime: getTime - timestamp,
-            packageNumber: count
+            packageNumber: index
           }
         }
         
@@ -78,7 +78,7 @@ const MainPage = () => {
     return () => {
       if(flag) {
         clearInterval(interval);
-        count=0;
+        index=0;
         socket.close();
         notify("success close wss!", "success");
       }

@@ -19,6 +19,7 @@ const NavBar = () => {
           <div className="nav-link">
             <NavLink to={'/'} className="nav-item">Chart</NavLink>
             <NavLink to={'/CO2chart'} className="nav-item">CO2 Chart</NavLink>
+            <NavLink to={'/Tem_Hum'} className="nav-item">Tem and Hum Chart</NavLink>
             <NavLink to={'/data'} className="nav-item">Data</NavLink>
           </div>
           <div className="bg-mode">

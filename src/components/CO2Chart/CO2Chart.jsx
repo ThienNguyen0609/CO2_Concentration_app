@@ -13,14 +13,14 @@ const CO2Chart = () => {
   const [series1, setSeries1] = useState([]);
   const [series2, setSeries2] = useState([]);
   const [series3, setSeries3] = useState([]);
-  const [categories1, setCategiries1] = useState([]);
-  const [categories2, setCategiries2] = useState([]);
-  const [categories3, setCategiries3] = useState([]);
+  const [categories1, setCategories1] = useState([]);
+  const [categories2, setCategories2] = useState([]);
+  const [categories3, setCategories3] = useState([]);
 
   useEffect(() => {
-    handleGetByTimeStamp1h(setSeries1, setCategiries1);
-    handleGetByTimeStamp2h(setSeries2, setCategiries2);
-    handleGetByTimeStamp3h(setSeries3, setCategiries3);
+    handleGetByTimeStamp1h(setSeries1, setCategories1);
+    handleGetByTimeStamp2h(setSeries2, setCategories2);
+    handleGetByTimeStamp3h(setSeries3, setCategories3);
   }, []);
   return (
     <>

@@ -1,14 +1,14 @@
 import { getConcentrationByTimestamp } from "./concentration";
 
-const handlePackageLost = (seriesLen, series, seriesName, tem, hum) => {
+const handlePackageLost = (seriesLen, series, tem, hum, lostIndex) => {
     let quantityPackageLost = 1800 - seriesLen
     let count = 1
-    console.log("CO2 ", seriesName);
     series.forEach((item, index, array) => {
         if (index + count <= item.packageNumber - 1 && quantityPackageLost !== 0) {
-            const boolen = array.some(i => i.packageNumber === index + 1)
-            if (!boolen) {
-                console.log(index + 1)
+            const boolen = array.some(i => i.packageNumber === index + 1);
+            const findPackageLost = array.filter(i => i.packageNumber === index + 2);
+            if (!boolen && findPackageLost.length < 2) {
+                lostIndex.push(index + 1);
                 quantityPackageLost--;
                 tem.splice(index + 1, 0, null)
                 hum.splice(index + 1, 0, null)
@@ -27,13 +27,18 @@ const handleGetCategories = (setCategiries) => {
     }
     setCategiries(cate);
 }
-const handleGetTemAndHumByTimeStamp = async (setSeries, timestamp, seriesName) => {
+const handleGetTemAndHumByTimeStamp = async (setSeries, timestamp, seriesName, setLostIndex) => {
     const series = await getConcentrationByTimestamp(timestamp);
-    console.log(seriesName, series)
+    let lostData = {
+        seriesName: seriesName,
+        isLost: false,
+        index: []
+    }
     let temperature = [series[0].temperature, ...series.map(item => item.temperature)]
     let humidity = [series[0].humidity, ...series.map(item => item.humidity)]
     if (series.length < 1800) {
-        handlePackageLost(series.length, series, seriesName, temperature, humidity)
+        lostData.isLost = true
+        handlePackageLost(series.length, series, temperature, humidity, lostData.index)
     }
 
     setSeries([
@@ -46,6 +51,7 @@ const handleGetTemAndHumByTimeStamp = async (setSeries, timestamp, seriesName) =
             data: humidity,
         },
     ]);
+    lostData.isLost && setLostIndex(lostData.index)
 }
 
 export {

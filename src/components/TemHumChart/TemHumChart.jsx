@@ -14,6 +14,11 @@ const TemHumChart = () => {
   const [series3, setSeries3] = useState([]);
   const [series4, setSeries4] = useState([]);
   const [series5, setSeries5] = useState([]);
+  const [lostIndex1, setLostIndex1] = useState([]);
+  const [lostIndex2, setLostIndex2] = useState([]);
+  const [lostIndex3, setLostIndex3] = useState([]);
+  const [lostIndex4, setLostIndex4] = useState([]);
+  const [lostIndex5, setLostIndex5] = useState([]);
   const [timestampSeries1, setTimestampSeries1] = useState({
     min: "2024-06-25T07:24:13.000Z",
     max: "2024-06-25T10:24:13.000Z",
@@ -38,11 +43,11 @@ const TemHumChart = () => {
 
   useEffect(() => {
     handleGetCategories(setCategories);
-    handleGetTemAndHumByTimeStamp(setSeries1, timestampSeries1, "series1");
-    handleGetTemAndHumByTimeStamp(setSeries2, timestampSeries2, "series2");
-    handleGetTemAndHumByTimeStamp(setSeries3, timestampSeries3, "series3");
-    handleGetTemAndHumByTimeStamp(setSeries4, timestampSeries4, "series4");
-    handleGetTemAndHumByTimeStamp(setSeries5, timestampSeries5, "series5");
+    handleGetTemAndHumByTimeStamp(setSeries1, timestampSeries1, "series1", setLostIndex1);
+    handleGetTemAndHumByTimeStamp(setSeries2, timestampSeries2, "series2", setLostIndex2);
+    handleGetTemAndHumByTimeStamp(setSeries3, timestampSeries3, "series3", setLostIndex3);
+    handleGetTemAndHumByTimeStamp(setSeries4, timestampSeries4, "series4", setLostIndex4);
+    handleGetTemAndHumByTimeStamp(setSeries5, timestampSeries5, "series5", setLostIndex5);
   }, []);
   return (
     <>
@@ -50,26 +55,31 @@ const TemHumChart = () => {
         <div>
           <TemHumChartItem
             series={series1}
+            lostIndex={lostIndex1}
             categories={categories}
             title={"1mg"}
           />
           <TemHumChartItem
             series={series2}
+            lostIndex={lostIndex2}
             categories={categories}
             title={"2mg"}
           />
           <TemHumChartItem
             series={series3}
+            lostIndex={lostIndex3}
             categories={categories}
             title={"3mg"}
           />
           <TemHumChartItem
             series={series4}
+            lostIndex={lostIndex4}
             categories={categories}
             title={"4mg"}
           />
           <TemHumChartItem
             series={series5}
+            lostIndex={lostIndex5}
             categories={categories}
             title={"5mg"}
           />

@@ -12,14 +12,12 @@ import _ from "lodash";
 
 const MainPage = () => {
   const dispatch = useDispatch();
-  const CO2data = useSelector((state) => state.data.data);
   const flag = useSelector((state) => state.wss.flag);
 
   useEffect(() => {
     let socket;
     let interval;
     let timestamp;
-    let timeout;
     let index = 0;
     if(flag) {
       socket = new WebSocket("ws://192.168.43.249:80/ws")
@@ -29,9 +27,6 @@ const MainPage = () => {
           socket.send("get");
           timestamp = Date.now()
           index++;
-          timeout = setTimeout(() => {
-            dispatch(setWssPackageLost(index))
-          }, 5000)
         }, 6000)
       };
       socket.onerror = (event) => {
@@ -40,7 +35,6 @@ const MainPage = () => {
       socket.onmessage = async (event) => {
         const getTime = Date.now();
         const response = JSON.parse(event.data)
-        clearTimeout(timeout);
         let request = {};
         if(response.status) {
           request = {
@@ -90,7 +84,7 @@ const MainPage = () => {
         <NavBar />
         <ToastContainer />
         <div className="container-wrapper">
-          <div className="mp-inner row">
+          <div className="mp-inner">
             <Outlet />
           </div>
         </div>

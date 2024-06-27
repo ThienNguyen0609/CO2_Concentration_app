@@ -4,44 +4,43 @@ import { deleteConcentrationByTime } from "../../services/concentration";
 import { notify } from "../../services/toastify";
 
 const DeleteModal = ({ show, handleClose }) => {
-  const [min, setMin] = useState("");
-  const [max, setMax] = useState("");
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
   const handleDeleteDataByTime = async () => {
     let timeNow = false;
     handleClose(false);
-    if (max === "now") timeNow = true;
+    if (end === "now") timeNow = true;
     const timestamp = {
-      min: min,
-      max: timeNow ? new Date(Date.now()) : max,
+      start: start,
+      end: timeNow ? new Date(Date.now()) : end,
     };
-    console.log("timestamp:", timestamp);
     const response = await deleteConcentrationByTime(timestamp);
     notify(response, "success");
   };
   return (
     <Modal show={show} onHide={() => handleClose(false)} animation={false}>
       <Modal.Header closeButton>
-        <Modal.Title>Modal heading</Modal.Title>
+        <Modal.Title>Delete by timestamp</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Min time</Form.Label>
+            <Form.Label>start time</Form.Label>
             <Form.Control
               type="text"
-              placeholder="min time"
+              placeholder="start time"
               autoFocus
-              value={min}
-              onChange={(e) => setMin(e.target.value)}
+              value={start}
+              onChange={(e) => setStart(e.target.value)}
             />
           </Form.Group>
           <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Max time</Form.Label>
+            <Form.Label>end time</Form.Label>
             <Form.Control
               type="text"
-              placeholder="max time"
-              value={max}
-              onChange={(e) => setMax(e.target.value)}
+              placeholder="end time"
+              value={end}
+              onChange={(e) => setEnd(e.target.value)}
             />
           </Form.Group>
         </Form>

@@ -29,8 +29,8 @@ const Chart = () => {
 
   return (
     <>
-      <div className="row">
-        <div className={"col-12" + (mode ? " light-mode" : " dark-mode")}>
+      <div style={{width: "100%", display: "flex", flexWrap: "wrap"}}>
+        <div className={(mode ? " light-mode" : " dark-mode")} style={{width: "100%"}}>
           <button onClick={() => {
             if(!flag) dispatch(changeFlag(true))
             else notify("The device is connected.", "warning")
@@ -45,7 +45,7 @@ const Chart = () => {
           <button onClick={() => setDeleteShow(true)} className="chart-btn font-color">Delete Data By Time</button>
           <DeleteModal show={deleteShow} handleClose={setDeleteShow} />
         </div>
-        <div className="col-6">
+        <div style={{width: "50%"}}>
           <CO2Chart
             co2={[{
               data: _.isEmpty(data) ? [] : data?.map((item, index) => {
@@ -54,7 +54,7 @@ const Chart = () => {
             }]}
           />
         </div>
-        <div className="col-6">
+        <div style={{width: "50%"}}>
           <TemAndHumChart
             temAndHum={[
               {

@@ -10,11 +10,16 @@
   position: relative;
   height: 100%;
   overflow: auto;
-  scrollbar-width: none;
-  background-color: #170F23;
+
+  &::-webkit-scrollbar {
+    width: 5px;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #494252; 
+    border-radius: 10px;
+  }
   .inner {
     position: relative;
-    height: 100%;
   }
 }
 

@@ -1,5 +1,3 @@
-import { getConcentrationByTimestamp } from "./concentration";
-
 const handlePackageLost = (seriesLen, series, tem, hum, lostIndex) => {
     let quantityPackageLost = 1800 - seriesLen
     let count = 1
@@ -27,18 +25,18 @@ const handleGetCategories = (setCategiries) => {
     }
     setCategiries(cate);
 }
-const handleGetTemAndHumByTimeStamp = async (setSeries, timestamp, seriesName, setLostIndex) => {
-    const series = await getConcentrationByTimestamp(timestamp);
+const handleGetTemAndHumByTimeStamp = async (setSeries, data, seriesName, setLostIndex) => {
     let lostData = {
         seriesName: seriesName,
         isLost: false,
         index: []
     }
-    let temperature = [series[0].temperature, ...series.map(item => item.temperature)]
-    let humidity = [series[0].humidity, ...series.map(item => item.humidity)]
-    if (series.length < 1800) {
+    console.log(seriesName, data)
+    let temperature = [data[0].temperature, ...data.map(item => item.temperature)]
+    let humidity = [data[0].humidity, ...data.map(item => item.humidity)]
+    if (data.length < 1800) {
         lostData.isLost = true
-        handlePackageLost(series.length, series, temperature, humidity, lostData.index)
+        handlePackageLost(data.length, data, temperature, humidity, lostData.index)
     }
 
     setSeries([

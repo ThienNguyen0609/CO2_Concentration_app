@@ -8,6 +8,7 @@ import CO2Chart from "../components/CO2Chart/CO2Chart";
 import TemHumChart from "../components/TemHumChart/TemHumChart";
 import Data from "../components/Data/Data";
 import ErrorPage from "./ErrorPage";
+import SurveyData from "../components/Survey/Survey";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
         {
           path: "data/",
           element: <Data />
+        },
+        {
+          path: "survey_data/",
+          element: <SurveyData />
         }
     ]
   }

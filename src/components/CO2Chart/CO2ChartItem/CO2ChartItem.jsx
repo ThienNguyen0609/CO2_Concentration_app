@@ -1,7 +1,7 @@
 import Chart from "react-apexcharts";
 import { useSelector } from "react-redux";
 
-const CO2ChartItem = ({series, categories, lostData, title, average}) => {    
+const CO2ChartItem = ({series, categories, title}) => {    
   const mode = useSelector((state) => state.mode.light);
 
   return (
@@ -9,20 +9,6 @@ const CO2ChartItem = ({series, categories, lostData, title, average}) => {
       <div className="mb-3">
         <div style={{width: "100%", display: "flex", gap: "20px", marginBottom: "20px", flexWrap: "wrap"}}>
           <h1 style={{color: mode ? "#000" : "#fff", margin: "0"}}>{title}</h1>
-          {lostData.map(item => {
-            if(item != null) {
-              return (
-                <div key={item.seriesName} style={{display: "flex", gap: "5px", alignItems: "flex-end"}}>
-                  <h4 style={{margin: "0", color: mode ? "#000" : "#fff"}}>{item.seriesName}:</h4>
-                  <p style={{margin: "0", color: mode ? "#000" : "#fff"}}>{item.index.join(", ")}</p>
-                </div>
-              )
-            }
-          })}
-          <h3 style={{color: mode ? "#000" : "#fff", margin: "0", width: "100%"}}>
-            Average: 1mg - {average.averageTime1}s; 2mg - {average.averageTime2}s; 3mg - {average.averageTime3}s;
-            4mg - {average.averageTime4}s; 5mg - {average.averageTime5}s
-          </h3>
         </div>
         <Chart
           options={{

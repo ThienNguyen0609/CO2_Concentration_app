@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import NavBar from "./NavBar/NavBar";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addToData, setServerPackageLost, setWssPackageLost } from "../store/features/data/dataSlice";
+import { addToData, setServerPackageLost } from "../store/features/data/dataSlice";
 import { postConcentration } from "../services/concentration";
 import { ToastContainer } from "react-toastify";
 import { notify } from "../services/toastify";

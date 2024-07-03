@@ -26,6 +26,7 @@ const MBSurveyTable = () => {
             <th>Mass</th>
             <th>Average Time</th>
             <th>Lost Package</th>
+            <th>Total Package</th>
             <th>Percent</th>
           </tr>
         </thead>
@@ -42,6 +43,7 @@ const MBSurveyTable = () => {
                       ? item.lostPackage.join(", ")
                       : "x"}
                   </td>
+                  <td>{data[index].length}/1800</td>
                   <td>{item.percent}</td>
                 </tr>
               );

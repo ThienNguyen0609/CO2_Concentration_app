@@ -6,7 +6,7 @@ const HumTable = ({survey}) => {
   const mode = useSelector((state) => state.mode.light);
   return (
     <>
-      <h4 style={{color: mode ? "#000" : "#fff"}} className="mb-3">Humidity</h4>
+      <h4 style={{color: mode ? "#000" : "#fff"}} className="mb-3 mt-4">Humidity</h4>
       <Table striped bordered hover variant={mode ? "light" : "dark"}>
         <thead>
           <tr>

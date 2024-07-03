@@ -2,11 +2,11 @@ import Table from "react-bootstrap/Table";
 import { useSelector } from "react-redux";
 import _ from "lodash";
 
-const CO2Table = ({survey}) => {
+const CO2Table = ({survey, title}) => {
   const mode = useSelector((state) => state.mode.light);
   return (
     <>
-      <h4 style={{color: mode ? "#000" : "#fff"}} className="mb-3">CO2</h4>
+      <h4 style={{color: mode ? "#000" : "#fff"}} className="mb-3 mt-4">CO2 {title}</h4>
       <Table striped bordered hover variant={mode ? "light" : "dark"}>
         <thead>
           <tr>

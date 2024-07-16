@@ -38,7 +38,6 @@ const SurveyData = () => {
       <CO2Table survey={CO2Survey1h} title={"1H"} />
       <TemTable survey={temSurvey} />
       <HumTable survey={humSurvey} />
-      <h2 style={{color: mode ? "#000" : "#fff", textDecoration: "underline"}} className="mb-3 mt-3">TiO2</h2>
     </>
   );
 };
